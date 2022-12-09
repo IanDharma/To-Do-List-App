@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>To Do List App</title>
+    <link rel="stylesheet" href="todolist1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  </head>
+  <body>
+
+    <h1 class="title">
+      To Do List
+    </h1>
+    
+    <div class="todolist">
+      
+      <div class="list-head">
+        <input type="text" class="writingspace">
+        <button class="addlist">Add</button>
+      </div>
+      
+      <div class="task">
+        <!--<div class="item">
+          <p>New Item Here</p>
+          <div class="item-btn">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+        </div>-->
+      </div>
+    </div>
+    <script>
+      let input = document.querySelector('.writingspace');
+      let addBtn = document.querySelector('.addlist');
+      let tasks = document.querySelector('.task');
+
+      // setiap kali menulis sesuatu di dalam box, maka background color dari tombol 'add' akan langsung berubah. Tapi ketika box kosong, maka tombol 'add' akan langsung kembali ke warna semula
+
+      function tomboladd() {
+        input.addEventListener('keyup', () => {
+          if (input.value.trim() != 0) {
+            addBtn.classList.add('active')
+          } else {
+            addBtn.classList.remove('active')
+          }
+        })
+      }
+      
+      // setelah mengisi sesuatu di box dan menekan tombol add, maka sistem secara otomatis akan langsung menambah box berisikan tulisan yang kita tulis sebelumnya di dalam box.
+
+      function menambahtask() {
+        addBtn.addEventListener('click', () => {
+          if (input.value.trim() != 0) {
+            let newitem = document.createElement('div');
+            newitem.classList.add('item');
+            newitem.innerHTML = `
+            <p> ${input.value} </p>
+            <div class="item-btn">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            `
+            tasks.appendChild(newitem);
+            input.value = '';
+          } else {
+            alert('Please enter a task!')
+          }
+        })
+      }
+
+      // menghapus task yang ada
+
+      function menghapustask() {
+        tasks.addEventListener('click', (e) => {
+          if (e.target.classList.contains('fa-xmark')) {
+            e.target.parentElement.parentElement.remove();
+          }
+        })
+      }
+
+      // check-mark bahwa task yang kita tulis sudah selesai dikerjakan
+
+      function checkmark() {
+        tasks.addEventListener('click', (e) => {
+          if (e.target.classList.contains('fa-pen-to-square')) {
+            e.target.parentElement.parentElement.classList.toggle('completed');
+          }
+        })
+      }
+
+      tomboladd();
+      menambahtask();
+      menghapustask();
+      checkmark();
+
+    </script>
+  </body>
+</html>
